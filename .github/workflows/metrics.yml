@@ -1,0 +1,59 @@
+name: Metrics
+on:
+  schedule: [{cron: "0 0 * * 0"}]
+  workflow_dispatch:
+  push: {branches: ["main"]}
+
+jobs:
+  achievements:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: lowlighter/metrics@latest
+        with:
+          filename: achievements.svg
+          token: ${{ secrets.METRICS_SECRET }}
+          base: achievements
+          plugin_achievements: yes
+          plugin_achievements_display: compact
+
+  github-metrics:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: lowlighter/metrics@latest
+        with:
+          filename: header.svg
+          token: ${{ secrets.METRICS_SECRET }}
+          template: classic
+          base: header
+
+  acti_comm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: lowlighter/metrics@latest
+        with:
+          filename: acti_comm.svg
+          token: ${{ secrets.METRICS_SECRET }}
+          template: classic
+          base: activity, community
+
+  issue_pr_lang:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: lowlighter/metrics@latest
+        with:
+          filename: issue_pr_lang.svg
+          token: ${{ secrets.METRICS_SECRET }}
+          template: classic
+          base: ""
+          plugin_followup: yes
+          plugin_languages: yes
+
+  repositories:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: lowlighter/metrics@latest
+        with:
+          filename: repositories.svg
+          token: ${{ secrets.METRICS_SECRET }}
+          template: classic
+          base: repositories
